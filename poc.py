@@ -12,3 +12,5 @@ buf += "A" * 146 + "BBBB" + "C" * 300
 buf += "\n"
 
 s.send(buf)
+
+# done
