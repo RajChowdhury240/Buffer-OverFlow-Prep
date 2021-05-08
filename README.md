@@ -3,6 +3,7 @@
 Buffer OverFlow Preparation for OSCP
 
 
+
 In a nutshell, what we want to accomplish is to crash the application, inject our code and instruct it to execute our shellcode. Simple right? Let’s go!
 
 ## Steps:
